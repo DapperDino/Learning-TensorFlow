@@ -6,8 +6,8 @@ from sklearn import linear_model
 import matplotlib.pyplot as pyplot
 from matplotlib import style
 
-#Load student data from csv file.
-data = pd.read_csv("StudentData.csv", sep=";")
+#Load student data from file.
+data = pd.read_csv("StudentDataRegression/StudentData.csv", sep=";")
 
 #Filter only the data we wish to model.
 data = data[["G1", "G2", "G3", "studytime", "failures", "absences"]]
@@ -44,12 +44,12 @@ while(True):
         print(best_accuracy)
 
         #Save the model to a file.
-        with open("student_model.pickle", "wb") as f:
+        with open("StudentDataRegression/student_model.pickle", "wb") as f:
             pickle.dump(linear, f)
 """
 
 #Load model from file.
-pickle_in = open("student_model.pickle", "rb")
+pickle_in = open("StudentDataRegression/student_model.pickle", "rb")
 linear = pickle.load(pickle_in)
 
 #Output statistics from the testing.
@@ -62,7 +62,7 @@ for i in range(len(predictions)):
     print(predictions[i], x_test[i], y_test[i])
 
 #Display data as scatter graph.
-p = "studytime"
+p = "failures"
 style.use("ggplot")
 pyplot.scatter(data[p], data[predict])
 pyplot.xlabel(p)
