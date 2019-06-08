@@ -6,21 +6,22 @@ from sklearn import linear_model
 import matplotlib.pyplot as pyplot
 from matplotlib import style
 
-#Load student data from file.
+# Load student data from file.
 data = pd.read_csv("StudentDataRegression/StudentData.csv", sep=";")
 
-#Filter only the data we wish to model.
+# Filter only the data we wish to model.
 data = data[["G1", "G2", "G3", "studytime", "failures", "absences"]]
 
-#Define the label we wish to predict.
+# Define the label we wish to predict.
 predict = "G3"
 
-#Drop the prediction from the input data since we won't be using it as input data.
+# Drop the prediction from the input data since we won't be using it as input data.
 x = np.array(data.drop([predict], 1))
 y = np.array(data[predict])
 
-#Use 90% of the data to train with and then test on the remaining 10%.
-x_train, x_test, y_train, y_test = sk.model_selection.train_test_split(x, y, test_size = 0.1)
+# Use 90% of the data to train with and then test on the remaining 10%.
+x_train, x_test, y_train, y_test = sk.model_selection.train_test_split(
+    x, y, test_size=0.1)
 
 """
 best_accuracy = 0
@@ -48,20 +49,20 @@ while(True):
             pickle.dump(linear, f)
 """
 
-#Load model from file.
+# Load model from file.
 pickle_in = open("StudentDataRegression/student_model.pickle", "rb")
 linear = pickle.load(pickle_in)
 
-#Output statistics from the testing.
+# Output statistics from the testing.
 print("Co: {}".format(linear.coef_))
 print("Intercept: {}".format(linear.intercept_))
 
-#Output data from the testing.
+# Output data from the testing.
 predictions = linear.predict(x_test)
 for i in range(len(predictions)):
     print(predictions[i], x_test[i], y_test[i])
 
-#Display data as scatter graph.
+# Display data as scatter graph.
 p = "failures"
 style.use("ggplot")
 pyplot.scatter(data[p], data[predict])
